@@ -1,3 +1,6 @@
+:root {
+  font-size: 20px;
+}
 * {
   padding: 0;
   margin: 0;
@@ -300,7 +303,7 @@ body {
 
 @media (max-width: 780px) {
   :root {
-    font-size: 14px;
+    font-size: 18px;
   }
   .stat_container {
     margin: 0 1.5rem;
@@ -320,7 +323,7 @@ body {
 }
 @media (max-width: 550px) {
   :root {
-    font-size: 12px;
+    font-size: 16px;
   }
   .stats_text_container,
   .stats_container {
@@ -361,11 +364,5 @@ body {
   .date_selection_container {
     display: flex;
     justify-content: space-between;
-  }
-}
-
-@media (max-width: 350px) {
-  :root {
-    font-size: 10px;
   }
 }
