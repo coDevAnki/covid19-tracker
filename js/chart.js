@@ -42,6 +42,7 @@ export const makeLineChart = (
         legend: {
           labels: {
             color: "white",
+            padding: 20,
             font: {
               size: "15",
             },
@@ -71,13 +72,11 @@ export const makePieChart = (DATA_LIST) => {
         legend: {
           labels: {
             color: "white",
+            padding: 50,
             font: {
               size: "15",
             },
           },
-        },
-        tooltip: {
-          enabled: false,
         },
       },
     },

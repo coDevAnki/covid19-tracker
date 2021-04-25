@@ -76,7 +76,7 @@ body {
   top: 100%;
   width: 400px;
   height: 400px;
-  padding: 0.8rem;
+  padding: 1rem;
   background-color: #3f003f;
   transform: scale(0);
   transform-origin: top left;
@@ -110,6 +110,8 @@ body {
   transform: scaleX(0);
   transition: 0.2s 0.2s ease transform;
   border: none;
+  margin-right: 1em;
+  border-radius: 0.3em;
 }
 .visible {
   opacity: 1;
@@ -167,26 +169,34 @@ body {
   position: absolute;
   top: calc(100%);
   z-index: 4;
-  padding: 1rem 0.8rem;
+  padding: 1rem 0.6rem;
   background-color: #3f003f;
   transform: scale(0);
   transform-origin: top left;
   transition: 0.2s ease-in transform;
 }
+
 .date_selection label {
-  margin-left: 1rem;
+  margin: 0.6em;
 }
 .date_selection select {
-  padding: 0.15em;
-  margin: 0 0.3em;
+  padding: 0.25em;
+  margin: 0 0.4em;
+  margin-bottom: 1rem;
+  position: relative;
+  border-radius: 0.3em;
+}
+.date_selection select::after {
+  content: "";
+  position: absolute;
 }
 .dates-submit_btn {
   display: block;
-  padding: 0.4em 2em;
+  padding: 0.5em 2em;
   margin: auto;
+  border-radius: 0.3em;
   margin-top: 1em;
   cursor: pointer;
-  /* background: rgb(122, 122, 122); */
   border: none;
 }
 .dates-error {
@@ -349,9 +359,17 @@ body {
   }
   .date_selection,
   .country_selection {
-    width: 280px;
-    left: calc(50% - 140px);
     transform-origin: top;
+    font-size: 1.5rem;
+    padding-left: 0;
+  }
+  .country_selection {
+    width: 94vw;
+    left: calc(50% - 47vw);
+  }
+  .date_selection {
+    width: 80vw;
+    left: calc(50% - 40vw);
   }
   .your_location_wrapper {
     margin: 0.5em 0;
@@ -359,6 +377,7 @@ body {
   .from_date_container,
   .to_date_container {
     flex-direction: column;
+    margin: auto;
   }
   .date_selection_container {
     display: flex;

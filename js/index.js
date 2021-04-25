@@ -11,7 +11,6 @@ import {
   modifyDateLabel,
   setStoredData,
 } from "./utility.js";
-
 const countryName = select(".country_name");
 const totalCases = select(".total_cases h5");
 const recoveredCases = select(".recovered_cases h5");
@@ -57,9 +56,9 @@ const populateChartLists = (countryData, pieData) => {
     LINE_DEATH_LIST.push(+Deaths);
     LINE_DATE_LIST.push(modifyDateLabel(Date));
     if (!pieData) {
-      PIE_LIST[0] += +Confirmed;
-      PIE_LIST[1] += +Recovered;
-      PIE_LIST[2] += +Deaths;
+      PIE_LIST[0] += +Confirmed-PIE_LIST[0];
+      PIE_LIST[1] += +Recovered-PIE_LIST[1];
+      PIE_LIST[2] += +Deaths-PIE_LIST[2];
     }
   });
 
@@ -137,7 +136,7 @@ const updateStatTexts = (country, totalNum, recoveredNum, deathNum) => {
 const changeCountry = async (country, from, to) => {
   let Stats_Done = false;
   let TotalConfirmed, TotalRecovered, TotalDeaths;
-
+  countryName.textContent = "Loading...";
   if (SUMMARY_DATA_IN_MEMORY || SUMMARY_DATA_IN_STORAGE) {
     let storedData = SUMMARY_DATA_IN_MEMORY || SUMMARY_DATA_IN_STORAGE;
     let countryFromStore = storedData.Countries.find(
@@ -151,27 +150,32 @@ const changeCountry = async (country, from, to) => {
       Stats_Done = true;
     }
   }
-
+  let prev_country = CURRENT_COUNTRY;
   CURRENT_COUNTRY = country;
+  try {
+    let countryData = await getByDateRange(
+      country,
+      from ? formatDate(...from) : formatDate(2020, 1, 1),
+      to ? formatDate(...to) : formatDate()
+    );
 
-  let countryData = await getByDateRange(
-    country,
-    from ? formatDate(...from) : formatDate(2020, 1, 1),
-    to ? formatDate(...to) : formatDate()
-  );
+    if (!Stats_Done) {
+      let { Confirmed, Recovered, Deaths } = countryData[
+        countryData.length - 1
+      ];
+      updateStatTexts(country, Confirmed, Recovered, Deaths);
+    }
 
-  if (!Stats_Done) {
-    let { Confirmed, Recovered, Deaths } = countryData[countryData.length - 1];
-    updateStatTexts(country, Confirmed, Recovered, Deaths);
+    if (Stats_Done) {
+      populateChartLists(countryData, [
+        TotalConfirmed,
+        TotalRecovered,
+        TotalDeaths,
+      ]);
+    } else populateChartLists(countryData);
+  } catch (e) {
+    countryName.textContent = "Could not Found";
   }
-
-  if (Stats_Done) {
-    populateChartLists(countryData, [
-      TotalConfirmed,
-      TotalRecovered,
-      TotalDeaths,
-    ]);
-  } else populateChartLists(countryData);
 };
 
 const updateCountryList = (list) => {
