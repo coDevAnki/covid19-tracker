@@ -56,9 +56,9 @@ const populateChartLists = (countryData, pieData) => {
     LINE_DEATH_LIST.push(+Deaths);
     LINE_DATE_LIST.push(modifyDateLabel(Date));
     if (!pieData) {
-      PIE_LIST[0] += +Confirmed-PIE_LIST[0];
-      PIE_LIST[1] += +Recovered-PIE_LIST[1];
-      PIE_LIST[2] += +Deaths-PIE_LIST[2];
+      PIE_LIST[0] += +Confirmed - PIE_LIST[0];
+      PIE_LIST[1] += +Recovered - PIE_LIST[1];
+      PIE_LIST[2] += +Deaths - PIE_LIST[2];
     }
   });
 
@@ -150,7 +150,6 @@ const changeCountry = async (country, from, to) => {
       Stats_Done = true;
     }
   }
-  let prev_country = CURRENT_COUNTRY;
   CURRENT_COUNTRY = country;
   try {
     let countryData = await getByDateRange(
@@ -174,7 +173,7 @@ const changeCountry = async (country, from, to) => {
       ]);
     } else populateChartLists(countryData);
   } catch (e) {
-    countryName.textContent = "Could not Found";
+    countryName.textContent = "Unable To Load";
   }
 };
 
