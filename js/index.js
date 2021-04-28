@@ -43,6 +43,7 @@ let SUMMARY_DATA_IN_MEMORY;
 let SUMMARY_DATA_IN_STORAGE = getStoredData("GLOBAL_COVID_DATA");
 
 configDateSelection();
+
 const populateChartLists = (countryData, pieData) => {
   LINE_RECOVERED_LIST = [];
   LINE_DEATH_LIST = [];
@@ -80,7 +81,12 @@ const updateDataTable = (countries, num) => {
     let row = `<tr>
    <td>${each.Country}</td>
    <td>${each.TotalConfirmed}</td>
-   <td>${each.TotalRecovered}</td>
+   <td>${
+     each.TotalRecovered ||
+     each.TotalConfirmed -
+       each.TotalDeaths -
+       Math.round(each.TotalConfirmed * 0.1)
+   }</td>
    <td>${each.TotalDeaths}</td>
    </tr>`;
     allRows += row;
